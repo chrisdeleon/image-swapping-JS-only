@@ -1,92 +1,73 @@
 var imageArray = [
-"one.jpg", 
-"two.jpg",
-"three.jpg",
-"four.jpg",
-"five.jpg",
-"six.jpg",
-"seven.jpg",
-"eight.jpg"
+	"one.jpg",
+	"two.jpg",
+	"three.jpg",
+	"four.jpg",
+	"five.jpg",
+	"six.jpg",
+	"seven.jpg",
+	"eight.jpg"
 ];
 
-// moved all file names into array
 
 
-window.addEventListener('load', initializer) // load event initializer
-
-var container; // global variable for container ID in HTML
-
-var largeImage; // global variable for large image
-
-var i = 0; // initialize and assign value to counter
-
-function initializer() // function to initialize the document
-{
-	container = document.getElementById('container');
-	// identifies the thumbnail container
-	largeImage = document.getElementById('main');// identifies the main image
-
-	thumbnailCreate(); // calls function
-}
-
+var container;
+var largeImage;
+var i = 0;
 var imgItem;
+var newImages = document.getElementsByTagName('img');
+var mainImage = document.getElementById('main');
+mainImage.src = imageArray[i];
 
-function thumbnailCreate() // function for adding thumbnail images
-{
-	imgItem = document.createElement('img'); // creates img element
 
-	imgItem.src = imageArray[i]; // adds array image in the created, in this case it will always be array index 0
+// Initializes page
 
-	largeImage.appendChild(imgItem); // directs JS to add img element under div id'd as container
+window.addEventListener('load', initializer);
 
-	for(i = 0; i < 4; i++) // loops four images into the thumbnail area
-	{
-		imgItem = document.createElement('img'); // creates img element
-
-		imgItem.src = imageArray[i]; // adds array image in the created img element
-
-		imgItem.classList.add("pointer"); // adds pointer class from CSS
-
-		container.appendChild(imgItem); // directs JS to add img element under div id'd as container
-
-		
-
-	}
+function initializer() {
+	container = document.getElementById('container');
+	largeImage = document.getElementById('main');
+	thumbnailCreate();
 }
 
 
+// creates img classes for main image and thumbnails
 
+function thumbnailCreate() {
+	imgItem = document.createElement('img');
+	imgItem.src = imageArray[i];
+	largeImage.appendChild(imgItem); // adds img tag inside large image div
 
-
-
-var newImages = document.getElementsByTagName('img'); // targets img tags 
-
-
-var mainImage = document.getElementById('main'); // declared global variable for main ID in HTML
-
-mainImage.addEventListener("dblclick", function(){
-	for (var index = 1; index < 6; index++){ // loops 4 times for 4 thumbnails, excludes the first img tag since it is the main picture
-		newImages[index].src = imageArray[Math.floor(Math.random() * imageArray.length)]; 
+	for (i = 0; i < 4; i++) {
+		imgItem = document.createElement('img');
+		imgItem.src = imageArray[i];
+		imgItem.classList.add("pointer");
+		container.appendChild(imgItem);
+		imgItem.addEventListener('click', itemClicked); // event listener for thumbnail images
 	}
-} );
-
-/* added double-click event listener
-and anonymous function on the large picture that causes thumbnails to change*/
-
-
-
-
-function index(num){
-	document.getElementById('main').src = click;
 }
 
-/* function above pushes the source of the
-thumb-nail image that was clicked into the 
-main image source */
+// replaces main image with clicked thumbnail image
+function itemClicked(e) {
+	mainImage.src = e.target.src;
+}
+
+mainImage.addEventListener("dblclick", function() {
+	for (i = 1; i < imageArray.length; i++) {
+		newImages[i].src = imageArray[i + 2];
+	}
+});
 
 
 
 
+/* I tried to use the code below within the main image event listener, but sometimes the values would repeat which
+would cause some of the images to appear more than once in the thumbnail */
 
-
-
+// for (i = 1; i < 6; i++)
+// { 
+// 	var randomImage = imageArray[Math.floor(Math.random() * imageArray.length)]; 
+// 	console.log(randomImage);
+// 	var randomItem = randomImage
+// 	newImages[i].src = randomItem; 
+// }
