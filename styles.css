@@ -27,10 +27,14 @@
 .thumbnail img {
 	max-height: 20vh;
 }
+/*
 
-.thumbnail img:hover {
+.thumbnail-image:hover {
 	opacity: 0.7;
 }
+
+pseudo-class no longer functions
+*/
 
 .pointer {
 	cursor: pointer;
