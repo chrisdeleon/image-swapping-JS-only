@@ -9,19 +9,16 @@ var imageArray = [
 	"eight.jpg"
 ];
 
-
-
 var container;
 var largeImage;
 var i = 0;
 var imgItem;
 var newImages = document.getElementsByTagName('img');
 var mainImage = document.getElementById('main');
-mainImage.src = imageArray[i];
+mainImage.src = imageArray[i]; // loads image into the main image
 
 
-// Initializes page
-
+// intializes page
 window.addEventListener('load', initializer);
 
 function initializer() {
@@ -30,44 +27,27 @@ function initializer() {
 	thumbnailCreate();
 }
 
-
-// creates img classes for main image and thumbnails
-
 function thumbnailCreate() {
-	imgItem = document.createElement('img');
-	imgItem.src = imageArray[i];
-	largeImage.appendChild(imgItem); // adds img tag inside large image div
-
 	for (i = 0; i < 4; i++) {
-		imgItem = document.createElement('img');
-		imgItem.src = imageArray[i];
+		imgItem = document.createElement('img'); // indicates what HTML tag to create
+		imgItem.src = imageArray[i]; // gives each img tag a source from array
 		imgItem.classList.add("pointer");
-		container.appendChild(imgItem);
-		imgItem.addEventListener('click', itemClicked); // event listener for thumbnail images
+		container.appendChild(imgItem); // creates img tags below container in HTML
+		imgItem.addEventListener('click', itemClicked);
 	}
 }
 
-// replaces main image with clicked thumbnail image
+// changes the main image displayed on click
 function itemClicked(e) {
 	mainImage.src = e.target.src;
 }
 
+
+// loads new images from array
 mainImage.addEventListener("dblclick", function() {
-	for (i = 1; i < imageArray.length; i++) {
-		newImages[i].src = imageArray[i + 2];
+	for (i = 1; i < 4; i++) {
+
+		var randomImage = imageArray[Math.floor(Math.random() * imageArray.length)]; // generates random number based off array length
+		newImages[i].src = randomImage;
 	}
 });
-
-
-
-
-/* I tried to use the code below within the main image event listener, but sometimes the values would repeat which
-would cause some of the images to appear more than once in the thumbnail */
-
-// for (i = 1; i < 6; i++)
-// { 
-// 	var randomImage = imageArray[Math.floor(Math.random() * imageArray.length)]; 
-// 	console.log(randomImage);
-// 	var randomItem = randomImage
-// 	newImages[i].src = randomItem; 
-// }
